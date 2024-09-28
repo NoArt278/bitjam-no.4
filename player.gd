@@ -9,7 +9,6 @@ var mouse_pos_delta : Vector2 = Vector2.ZERO
 @onready var post_processing_mesh: MeshInstance3D = $Camera3D/PostProcessingShader
 var post_process_material : Material
 const color_filters : Array = [Vector3(1.0, 1.0, 1.0), Vector3(1.0, 0.0, 0.0), Vector3(0.0, 1.0, 0.0), Vector3(0.0, 0.0, 1.0)]
-const bg_colors : Array = [Vector3(0.0, 0.0, 0.0), Vector3(0.0, 0.0, 0.0), Vector3(1.0, 1.0, 1.0), Vector3(1.0, 1.0, 1.0)]
 var curr_filter : int = 0
 
 func _ready() -> void:

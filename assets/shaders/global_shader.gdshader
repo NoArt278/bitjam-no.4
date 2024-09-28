@@ -11,8 +11,8 @@ void vertex() {
 void fragment() {
 	vec3 c = textureLod(screen_texture, SCREEN_UV, 1.0).rgb;
 	if ((c.x == color_filter.x && c.y == color_filter.y && c.z == color_filter.z) || (c.x == 1.0 && c.y == 1.0 && c.z == 1.0)) {
-		ALBEDO.rgb = mix(ALBEDO.rgb, color_filter, clamp(TIME, 0.0, 1.0));
+		ALBEDO.rgb = color_filter;
 	} else {
-		ALBEDO.rgb = mix(ALBEDO.rgb, vec3(0.0, 0.0, 0.0), clamp(TIME, 0.0, 1.0));
+		ALBEDO.rgb = vec3(0.0, 0.0, 0.0);
 	}
 }
