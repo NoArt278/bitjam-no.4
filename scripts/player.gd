@@ -4,10 +4,10 @@ extends CharacterBody3D
 const ACCELERATION = 50.0
 const DECELERATION = 1.0
 const JUMP_VELOCITY = 4.5
-const SHEAR_SPEED = 40.0
+const SHEAR_SPEED = 30.0
 const SHEAR_ANGLE = 20.0
 const MAX_SPEED = 30.0
-var mouse_sensitivity : float = 0.002
+var mouse_sensitivity : float = 0.003
 var mouse_pos_delta : Vector2 = Vector2.ZERO
 @onready var camera_anchor: Node3D = $CameraAnchor
 @onready var camera_3d: Camera3D = $CameraAnchor/Camera3D
