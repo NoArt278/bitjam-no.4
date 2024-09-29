@@ -1,19 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://brwdlt150a1ak"]
+[gd_scene load_steps=12 format=3 uid="uid://brwdlt150a1ak"]
 
-[ext_resource type="Material" uid="uid://cygbti6dy61ms" path="res://assets/shaders/unshaded_shader.tres" id="1_near7"]
+[ext_resource type="Material" uid="uid://hv8u5elpvwpk" path="res://assets/cracked_material.tres" id="2_k236y"]
 [ext_resource type="PackedScene" uid="uid://b873bed2itynf" path="res://scenes/player.tscn" id="2_nuv5h"]
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_1gp7q"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_belie"]
-shading_mode = 0
-diffuse_mode = 3
-specular_mode = 2
-albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_0gyn1"]
-material = SubResource("StandardMaterial3D_belie")
-size = Vector2(100, 100)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ll6k4"]
 shading_mode = 0
@@ -27,25 +15,32 @@ material = SubResource("StandardMaterial3D_ll6k4")
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_wcfct"]
 points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qrcua"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tsqx4"]
 shading_mode = 0
 diffuse_mode = 3
 specular_mode = 2
 albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_v6g5l"]
-material = SubResource("StandardMaterial3D_qrcua")
+material = SubResource("StandardMaterial3D_tsqx4")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1fuvr"]
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 2
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7mgv5"]
+material = SubResource("StandardMaterial3D_1fuvr")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_esfw4"]
+material = ExtResource("2_k236y")
+size = Vector2(100, 100)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_t617v"]
+points = PackedVector3Array(-50, 0, -50, -50, 0, 50, 50, 0, -50, 50, 0, 50)
 
 [node name="World" type="Node3D"]
-
-[node name="Floor" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
-shape = SubResource("WorldBoundaryShape3D_1gp7q")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-material_override = ExtResource("1_near7")
-mesh = SubResource("PlaneMesh_0gyn1")
 
 [node name="BlueCube" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
@@ -67,9 +62,27 @@ mesh = SubResource("BoxMesh_v6g5l")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RedCube/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_wcfct")
 
+[node name="GreenCube" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, -3.31509)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_7mgv5")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="GreenCube"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GreenCube/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_wcfct")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 27.1893, 0)
 directional_shadow_mode = 0
 
 [node name="Player" parent="." instance=ExtResource("2_nuv5h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.50619, 1.33656, 0)
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_esfw4")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_t617v")

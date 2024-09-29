@@ -6,19 +6,7 @@ const JUMP_VELOCITY = 4.5
 var mouse_sensitivity : float = 0.002
 var mouse_pos_delta : Vector2 = Vector2.ZERO
 @onready var camera_3d: Camera3D = $Camera3D
-@onready var post_processing_mesh: MeshInstance3D = $Camera3D/PostProcessingShader
-var post_process_material : Material
-const color_filters : Array = [Vector3(1.0, 1.0, 1.0), Vector3(1.0, 0.0, 0.0), Vector3(0.0, 1.0, 0.0), Vector3(0.0, 0.0, 1.0)]
-var curr_filter : int = 0
 
-func _ready() -> void:
-	post_process_material = post_processing_mesh.get_active_material(0)
-
-func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("change_color") :
-		curr_filter += 1
-		curr_filter %= color_filters.size()
-		post_process_material.set("shader_parameter/color_filter", color_filters[curr_filter])
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.

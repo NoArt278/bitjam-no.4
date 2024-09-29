@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://b873bed2itynf"]
+[gd_scene load_steps=8 format=3 uid="uid://b873bed2itynf"]
 
-[ext_resource type="Script" path="res://player.gd" id="1_uwrgn"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_uwrgn"]
 [ext_resource type="Shader" path="res://assets/shaders/global_shader.gdshader" id="2_b7fwx"]
+[ext_resource type="Script" path="res://scripts/post_processing_shader.gd" id="3_4ui1d"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ou4f8"]
 
@@ -32,3 +33,4 @@ environment = SubResource("Environment_4woh6")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_dyvf2")
+script = ExtResource("3_4ui1d")
