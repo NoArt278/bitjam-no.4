@@ -1,11 +1,12 @@
 extends CharacterBody3D
 
 
-const ACCELERATION = 50.0
+const ACCELERATION = 40.0
 const DECELERATION = 1.0
-const JUMP_VELOCITY = 4.5
+const JUMP_VELOCITY = 12.0
 const SHEAR_SPEED = 30.0
-const SHEAR_ANGLE = 20.0
+const SHEAR_ANGLE_Z = 20.0
+const SHEAR_ANGLE_X = 15.0
 const MAX_SPEED = 30.0
 var mouse_sensitivity : float = 0.003
 var mouse_pos_delta : Vector2 = Vector2.ZERO
@@ -15,7 +16,7 @@ var mouse_pos_delta : Vector2 = Vector2.ZERO
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		velocity += get_gravity() * 3 * delta
 
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
@@ -28,14 +29,14 @@ func _physics_process(delta: float) -> void:
 	if direction:
 		velocity.x += direction.x * ACCELERATION * delta
 		velocity.z += direction.z * ACCELERATION * delta
-		if abs(velocity.x) > MAX_SPEED :
-			velocity.x = MAX_SPEED * direction.x
-		if abs(velocity.z) > MAX_SPEED :
-			velocity.z = MAX_SPEED * direction.z
-		camera_anchor.rotation_degrees.z = move_toward(camera_anchor.rotation_degrees.z, SHEAR_ANGLE * input_dir.x * -1, SHEAR_SPEED * delta)
+		if abs(velocity.length()) > MAX_SPEED :
+			velocity = MAX_SPEED * velocity.normalized()
+		camera_anchor.rotation_degrees.x = move_toward(camera_anchor.rotation_degrees.x, SHEAR_ANGLE_X * sign(input_dir.y), SHEAR_SPEED * delta)
+		camera_anchor.rotation_degrees.z = move_toward(camera_anchor.rotation_degrees.z, SHEAR_ANGLE_Z * sign(input_dir.x) * -1, SHEAR_SPEED * delta)
 	else:
 		velocity.x = move_toward(velocity.x, 0, DECELERATION)
 		velocity.z = move_toward(velocity.z, 0, DECELERATION)
+		camera_anchor.rotation_degrees.x = move_toward(camera_anchor.rotation_degrees.x, 0, SHEAR_SPEED * delta)
 		camera_anchor.rotation_degrees.z = move_toward(camera_anchor.rotation_degrees.z, 0, SHEAR_SPEED * delta)
 
 	move_and_slide()

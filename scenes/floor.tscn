@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://dhvgjndma6isn"]
+
+[ext_resource type="Texture2D" uid="uid://dgxxrfg8ordk2" path="res://assets/crack_texture.png" id="1_kditl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5c2lo"]
+albedo_texture = ExtResource("1_kditl")
+uv1_scale = Vector3(3, 3, 3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_sj2yu"]
+material = SubResource("StandardMaterial3D_5c2lo")
+top_radius = 70.0
+bottom_radius = 70.0
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_m63i8"]
+points = PackedVector3Array(13.309, 2.33333, 71.1111, -13.309, -2.11111, -71.1111, -22.2048, -2.11111, -68.8698, -13.309, 2.33333, -71.1111, 71.1111, -2.11111, -13.309, -62.2153, -2.11111, 37.7552, -71.1111, 2.33333, -13.309, 62.2153, 2.33333, -37.7552, 44.4236, -2.11111, 57.7743, 66.6562, 2.33333, 28.8871, -57.7743, 2.33333, 44.4236, -22.2048, -2.11111, 68.8698, -62.2153, -2.11111, -37.7552, 37.7552, -2.11111, -62.2153, -44.4236, 2.33333, -57.7743, 28.8871, 2.33333, -66.6562, -71.1111, -2.11111, 13.309, -37.7552, 2.33333, 62.2153, 66.6562, -2.11111, 28.8871, 44.4236, 2.33333, 57.7743, 13.309, -2.11111, 71.1111, 71.1111, 2.33333, 13.309, -68.8698, 2.33333, 22.2048, 57.7743, -2.11111, -44.4236, 13.309, -2.11111, -71.1111, -44.4236, -2.11111, 57.7743, -13.309, 2.33333, 71.1111, -62.2153, 2.33333, -37.7552, -44.4236, -2.11111, -57.7743, 44.4236, 2.33333, -57.7743, -71.1111, -2.11111, -13.309, 71.1111, 2.33333, -13.309)
+
+[node name="Floor" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = SubResource("CylinderMesh_sj2yu")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_m63i8")
