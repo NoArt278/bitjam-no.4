@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 
-const ACCELERATION = 40.0
+const ACCELERATION = 50.0
 const DECELERATION = 1.0
 const JUMP_VELOCITY = 12.0
 const SHEAR_SPEED = 30.0

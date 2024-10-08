@@ -1,8 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://bq2cuhcoy52m0"]
+[gd_scene load_steps=4 format=3 uid="uid://bq2cuhcoy52m0"]
+
+[ext_resource type="Material" uid="uid://yypw1s04uuym" path="res://assets/white_material.tres" id="1_htlnp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dpedl"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_6kjwn"]
+material = ExtResource("1_htlnp")
 
 [node name="MeleeEnemy" type="CharacterBody3D"]
 
