@@ -8,25 +8,33 @@ const SHEAR_SPEED = 30.0
 const SHEAR_ANGLE_Z = 20.0
 const SHEAR_ANGLE_X = 15.0
 const MAX_SPEED = 30.0
+const DASH_SPEED = 60.0
 var mouse_sensitivity : float = 0.003
 var mouse_pos_delta : Vector2 = Vector2.ZERO
+var is_dashing : bool = false
+var dash_charges : int = 2
 @onready var camera_anchor: Node3D = $CameraAnchor
 @onready var camera_3d: Camera3D = $CameraAnchor/Camera3D
+@onready var dash_timer: Timer = $DashTimer
+@onready var dash_cd_timer: Timer = $DashCDTimer
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * 3 * delta
+		dash_cd_timer.stop()
+	elif dash_charges < 2 and dash_cd_timer.is_stopped() :
+		dash_cd_timer.start()
 
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and is_on_floor() and not(is_dashing):
 		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction:
+	if direction and not(is_dashing) :
 		velocity.x += direction.x * ACCELERATION * delta
 		velocity.z += direction.z * ACCELERATION * delta
 		if abs(velocity.length()) > MAX_SPEED :
@@ -38,7 +46,12 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, DECELERATION)
 		camera_anchor.rotation_degrees.x = move_toward(camera_anchor.rotation_degrees.x, 0, SHEAR_SPEED * delta)
 		camera_anchor.rotation_degrees.z = move_toward(camera_anchor.rotation_degrees.z, 0, SHEAR_SPEED * delta)
-
+	
+	if Input.is_action_just_pressed("dash") and dash_charges > 0 and not(is_dashing) :
+		velocity = -camera_3d.global_transform.basis.z * DASH_SPEED
+		dash_charges -= 1
+		is_dashing = true
+		dash_timer.start()
 	move_and_slide()
 	
 	if mouse_pos_delta.length() < 50 :
@@ -53,3 +66,10 @@ func _input(event: InputEvent) -> void:
 		if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED :
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		mouse_pos_delta = -event.relative
+
+
+func _on_dash_timer_timeout() -> void:
+	is_dashing = false
+
+func _on_dash_cd_timer_timeout() -> void:
+	dash_charges += 1
