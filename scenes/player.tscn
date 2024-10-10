@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://b873bed2itynf"]
+[gd_scene load_steps=7 format=3 uid="uid://b873bed2itynf"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_uwrgn"]
-[ext_resource type="Shader" path="res://assets/shaders/global_shader.gdshader" id="2_b7fwx"]
+[ext_resource type="Material" uid="uid://dfjlowor7dh2h" path="res://assets/post_process_material.tres" id="2_c168k"]
 [ext_resource type="Script" path="res://scripts/post_processing_shader.gd" id="3_4ui1d"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ou4f8"]
@@ -9,13 +9,8 @@
 [sub_resource type="Environment" id="Environment_4woh6"]
 ambient_light_source = 2
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dtt6u"]
-render_priority = 0
-shader = ExtResource("2_b7fwx")
-shader_parameter/color_filter = Vector3(1, 1, 1)
-
 [sub_resource type="QuadMesh" id="QuadMesh_dyvf2"]
-material = SubResource("ShaderMaterial_dtt6u")
+material = ExtResource("2_c168k")
 flip_faces = true
 size = Vector2(2, 2)
 

@@ -1,11 +1,11 @@
-[gd_scene load_steps=29 format=3 uid="uid://brwdlt150a1ak"]
+[gd_scene load_steps=28 format=3 uid="uid://brwdlt150a1ak"]
 
 [ext_resource type="Material" uid="uid://dm5c6jyr1y5w8" path="res://assets/blue_material.tres" id="1_ylaau"]
 [ext_resource type="Texture2D" uid="uid://dgxxrfg8ordk2" path="res://assets/crack_texture.png" id="2_3q220"]
 [ext_resource type="Material" uid="uid://dx0rpasjmwsxa" path="res://assets/red_material.tres" id="2_uao8j"]
 [ext_resource type="Material" uid="uid://33xfqb1gnvt3" path="res://assets/green_material.tres" id="3_4bhvm"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="4_5ll3m"]
-[ext_resource type="Shader" path="res://assets/shaders/global_shader.gdshader" id="5_bi38b"]
+[ext_resource type="Material" uid="uid://dfjlowor7dh2h" path="res://assets/post_process_material.tres" id="5_cyrti"]
 [ext_resource type="Script" path="res://scripts/post_processing_shader.gd" id="6_g8ahb"]
 [ext_resource type="Material" uid="uid://yypw1s04uuym" path="res://assets/white_material.tres" id="7_av01n"]
 [ext_resource type="Script" path="res://scripts/traps_manager.gd" id="7_c5vnf"]
@@ -29,13 +29,8 @@ material = ExtResource("3_4bhvm")
 [sub_resource type="Environment" id="Environment_4woh6"]
 ambient_light_source = 2
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dtt6u"]
-render_priority = 0
-shader = ExtResource("5_bi38b")
-shader_parameter/color_filter = Vector3(1, 1, 1)
-
 [sub_resource type="QuadMesh" id="QuadMesh_dyvf2"]
-material = SubResource("ShaderMaterial_dtt6u")
+material = ExtResource("5_cyrti")
 flip_faces = true
 size = Vector2(2, 2)
 
@@ -139,6 +134,7 @@ fov = 80.0
 far = 800.0
 
 [node name="PostProcessingShader" type="MeshInstance3D" parent="Player/CameraAnchor/Camera3D"]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_dyvf2")

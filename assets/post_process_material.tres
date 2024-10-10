@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dfjlowor7dh2h"]
+
+[ext_resource type="Shader" path="res://assets/shaders/global_shader.gdshader" id="1_rs8eu"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_rs8eu")
+shader_parameter/color_filter = Vector3(1, 1, 1)
