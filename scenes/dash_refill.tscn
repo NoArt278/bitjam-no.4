@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://ca5bj0hmxnyhj"]
+
+[ext_resource type="Material" uid="uid://yypw1s04uuym" path="res://assets/white_material.tres" id="1_v1w00"]
+[ext_resource type="Script" path="res://scripts/dash_refill.gd" id="2_co17o"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_v6ebq"]
+resource_local_to_scene = true
+material = ExtResource("1_v1w00")
+radius = 5.0
+height = 10.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_u4jsn"]
+radius = 8.0
+
+[node name="DashRefill" type="MeshInstance3D"]
+mesh = SubResource("SphereMesh_v6ebq")
+script = ExtResource("2_co17o")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_u4jsn")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

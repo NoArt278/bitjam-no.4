@@ -1,10 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dhvgjndma6isn"]
+[gd_scene load_steps=5 format=3 uid="uid://dhvgjndma6isn"]
 
 [ext_resource type="Texture2D" uid="uid://dgxxrfg8ordk2" path="res://assets/crack_texture.png" id="1_kditl"]
-
-[sub_resource type="NavigationMesh" id="NavigationMesh_gu5s7"]
-vertices = PackedVector3Array(-26.5, 0.5, 64.5, -20.25, 0.5, 66.75, -13, 0.5, 68.5, 64.5, 0.5, 26.5, 66.75, 0.5, 20.25, 68.5, 0.5, 13, 26.5, 0.5, -64.5, 20.25, 0.5, -66.75, 13, 0.5, -68.5, -64.5, 0.5, -26.5, -66.75, 0.5, -20.25, -68.5, 0.5, -13, -66.75, 0.5, 20.25, -64.5, 0.5, 26.5, -61, 0.5, 33.75, -69.25, 0.5, 7.75, 20.25, 0.5, 66.75, 26.5, 0.5, 64.5, 33.75, 0.5, 61, 66.75, 0.5, -20.25, 64.5, 0.5, -26.5, 61, 0.5, -33.75, -20.25, 0.5, -66.75, -26.5, 0.5, -64.5, -33.75, 0.5, -61, -7.75, 0.5, -69.25, -5, 0.5, 69.5, 7.75, 0.5, 69.25, 69.5, 0.5, 5, 69.25, 0.5, -7.75, 5, 0.5, -69.5, -69.5, 0.5, -5, -44.5, 0.5, 53.75, -33.75, 0.5, 61, -53.75, 0.5, 44.5, 53.75, 0.5, 44.5, 61, 0.5, 33.75, 44.5, 0.5, 53.75, 44.5, 0.5, -53.75, 33.75, 0.5, -61, -53.75, 0.5, -44.5, -61, 0.5, -33.75, 53.75, 0.5, -44.5, -44.5, 0.5, -53.75)
-polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(4, 3, 5), PackedInt32Array(7, 6, 8), PackedInt32Array(10, 9, 11), PackedInt32Array(13, 12, 14), PackedInt32Array(14, 12, 15), PackedInt32Array(18, 17, 16), PackedInt32Array(21, 20, 19), PackedInt32Array(23, 22, 24), PackedInt32Array(24, 22, 25), PackedInt32Array(26, 2, 27), PackedInt32Array(27, 2, 16), PackedInt32Array(16, 2, 0), PackedInt32Array(16, 0, 18), PackedInt32Array(28, 5, 29), PackedInt32Array(29, 5, 19), PackedInt32Array(19, 5, 3), PackedInt32Array(19, 3, 21), PackedInt32Array(25, 30, 8), PackedInt32Array(15, 31, 11), PackedInt32Array(33, 32, 0), PackedInt32Array(0, 32, 34), PackedInt32Array(0, 34, 14), PackedInt32Array(36, 35, 3), PackedInt32Array(3, 35, 37), PackedInt32Array(3, 37, 18), PackedInt32Array(6, 39, 38), PackedInt32Array(9, 41, 40), PackedInt32Array(8, 6, 25), PackedInt32Array(25, 6, 38), PackedInt32Array(25, 38, 21), PackedInt32Array(25, 21, 24), PackedInt32Array(11, 9, 15), PackedInt32Array(15, 9, 40), PackedInt32Array(15, 40, 24), PackedInt32Array(15, 24, 14), PackedInt32Array(38, 42, 21), PackedInt32Array(40, 43, 24), PackedInt32Array(3, 18, 21), PackedInt32Array(21, 18, 0), PackedInt32Array(21, 0, 14), PackedInt32Array(21, 14, 24)]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5c2lo"]
 albedo_texture = ExtResource("1_kditl")
@@ -18,14 +14,11 @@ bottom_radius = 70.0
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_m63i8"]
 points = PackedVector3Array(13.309, 2.33333, 71.1111, -13.309, -2.11111, -71.1111, -22.2048, -2.11111, -68.8698, -13.309, 2.33333, -71.1111, 71.1111, -2.11111, -13.309, -62.2153, -2.11111, 37.7552, -71.1111, 2.33333, -13.309, 62.2153, 2.33333, -37.7552, 44.4236, -2.11111, 57.7743, 66.6562, 2.33333, 28.8871, -57.7743, 2.33333, 44.4236, -22.2048, -2.11111, 68.8698, -62.2153, -2.11111, -37.7552, 37.7552, -2.11111, -62.2153, -44.4236, 2.33333, -57.7743, 28.8871, 2.33333, -66.6562, -71.1111, -2.11111, 13.309, -37.7552, 2.33333, 62.2153, 66.6562, -2.11111, 28.8871, 44.4236, 2.33333, 57.7743, 13.309, -2.11111, 71.1111, 71.1111, 2.33333, 13.309, -68.8698, 2.33333, 22.2048, 57.7743, -2.11111, -44.4236, 13.309, -2.11111, -71.1111, -44.4236, -2.11111, 57.7743, -13.309, 2.33333, 71.1111, -62.2153, 2.33333, -37.7552, -44.4236, -2.11111, -57.7743, 44.4236, 2.33333, -57.7743, -71.1111, -2.11111, -13.309, 71.1111, 2.33333, -13.309)
 
-[node name="FloorNav" type="NavigationRegion3D"]
-navigation_mesh = SubResource("NavigationMesh_gu5s7")
-
-[node name="Floor" type="MeshInstance3D" parent="."]
+[node name="Floor" type="MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 mesh = SubResource("CylinderMesh_sj2yu")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_m63i8")

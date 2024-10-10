@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+class_name Player
 
 const ACCELERATION = 50.0
 const DECELERATION = 1.0
@@ -17,14 +18,15 @@ var dash_charges : int = 2
 @onready var camera_3d: Camera3D = $CameraAnchor/Camera3D
 @onready var dash_timer: Timer = $DashTimer
 @onready var dash_cd_timer: Timer = $DashCDTimer
+@onready var hud: Control = %HUD
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * 3 * delta
-		dash_cd_timer.stop()
 	elif dash_charges < 2 and dash_cd_timer.is_stopped() :
-		dash_cd_timer.start()
+		dash_charges = 2
+		hud.update_dash_charge(dash_charges)
 
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor() and not(is_dashing):
@@ -52,6 +54,7 @@ func _physics_process(delta: float) -> void:
 		dash_charges -= 1
 		is_dashing = true
 		dash_timer.start()
+		hud.update_dash_charge(dash_charges)
 	move_and_slide()
 	
 	if mouse_pos_delta.length() < 50 :
@@ -71,5 +74,6 @@ func _input(event: InputEvent) -> void:
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false
 
-func _on_dash_cd_timer_timeout() -> void:
+func add_dash_charge() -> void:
 	dash_charges += 1
+	hud.update_dash_charge(dash_charges)

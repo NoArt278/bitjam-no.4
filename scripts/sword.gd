@@ -6,3 +6,4 @@ extends Node3D
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("attack") :
 		animation_player.play("attack")
+		await animation_player.animation_finished

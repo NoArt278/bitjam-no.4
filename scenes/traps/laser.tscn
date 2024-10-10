@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://du6qpdin15ce"]
+
+[ext_resource type="Script" path="res://scripts/trap.gd" id="1_7058q"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vs0l6"]
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 2
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_qocy0"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_vs0l6")
+top_radius = 0.2
+bottom_radius = 0.2
+height = 200.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8pfrr"]
+height = 200.0
+radius = 0.25
+
+[node name="Laser" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_qocy0")
+script = ExtResource("1_7058q")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CylinderShape3D_8pfrr")
