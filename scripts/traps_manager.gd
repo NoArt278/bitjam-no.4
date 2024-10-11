@@ -30,3 +30,7 @@ func _ready() -> void:
 				add_child(dash_refill)
 				dash_refill.position = Vector3(randf_range(-50,50), 70 + i * 20, randf_range(-50,50))
 				dash_refill.mesh.material = chosen_mat
+		else :
+			randomize()
+			curr_trap_instance.global_position.x = randf_range(-80, 80)
+			curr_trap_instance.global_position.z = randf_range(-80, 80)

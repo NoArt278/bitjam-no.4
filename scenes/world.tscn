@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://brwdlt150a1ak"]
+[gd_scene load_steps=32 format=3 uid="uid://brwdlt150a1ak"]
 
 [ext_resource type="Material" uid="uid://dm5c6jyr1y5w8" path="res://assets/blue_material.tres" id="1_ylaau"]
 [ext_resource type="Texture2D" uid="uid://dgxxrfg8ordk2" path="res://assets/crack_texture.png" id="2_3q220"]
@@ -10,7 +10,10 @@
 [ext_resource type="Material" uid="uid://yypw1s04uuym" path="res://assets/white_material.tres" id="7_av01n"]
 [ext_resource type="Script" path="res://scripts/traps_manager.gd" id="7_c5vnf"]
 [ext_resource type="PackedScene" uid="uid://dhvgjndma6isn" path="res://scenes/floor.tscn" id="7_p1wgo"]
-[ext_resource type="PackedScene" uid="uid://0jcv3iohxtok" path="res://scenes/hud.tscn" id="9_ba6bd"]
+[ext_resource type="Script" path="res://scripts/hud.gd" id="8_ey1hy"]
+[ext_resource type="Theme" uid="uid://d3q60infp614k" path="res://assets/font_theme.tres" id="9_twi0n"]
+[ext_resource type="AudioStream" uid="uid://dkpcuslfm6fx7" path="res://assets/egyptian fortress boss.ogg" id="13_kpb0p"]
+[ext_resource type="Script" path="res://scripts/finish.gd" id="14_dxo14"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_f88vy"]
 material = ExtResource("1_ylaau")
@@ -23,16 +26,6 @@ material = ExtResource("2_uao8j")
 
 [sub_resource type="BoxMesh" id="BoxMesh_7mgv5"]
 material = ExtResource("3_4bhvm")
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ou4f8"]
-
-[sub_resource type="Environment" id="Environment_4woh6"]
-ambient_light_source = 2
-
-[sub_resource type="QuadMesh" id="QuadMesh_dyvf2"]
-material = ExtResource("5_cyrti")
-flip_faces = true
-size = Vector2(2, 2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_coxw2"]
 shading_mode = 0
@@ -60,7 +53,7 @@ font_size = 32
 
 [sub_resource type="TextMesh" id="TextMesh_1ty74"]
 material = ExtResource("7_av01n")
-text = "LOOK UP
+text = "GET TO THE TOP OF THE TOWER
 "
 font_size = 32
 
@@ -80,6 +73,19 @@ material = SubResource("StandardMaterial3D_e0sjr")
 size = Vector2(200, 200)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_7603b"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ou4f8"]
+
+[sub_resource type="Environment" id="Environment_4woh6"]
+ambient_light_source = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_dyvf2"]
+material = ExtResource("5_cyrti")
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ipcqn"]
+radius = 200.0
 
 [node name="World" type="Node3D"]
 
@@ -116,37 +122,6 @@ shape = SubResource("ConvexPolygonShape3D_wcfct")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 27.1893, 0)
 directional_shadow_mode = 0
-
-[node name="Player" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.337, 4)
-script = ExtResource("4_5ll3m")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-shape = SubResource("CapsuleShape3D_ou4f8")
-
-[node name="CameraAnchor" type="Node3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.47, 0)
-
-[node name="Camera3D" type="Camera3D" parent="Player/CameraAnchor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.940112, 0)
-environment = SubResource("Environment_4woh6")
-fov = 80.0
-far = 800.0
-
-[node name="PostProcessingShader" type="MeshInstance3D" parent="Player/CameraAnchor/Camera3D"]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
-extra_cull_margin = 16384.0
-mesh = SubResource("QuadMesh_dyvf2")
-script = ExtResource("6_g8ahb")
-
-[node name="DashTimer" type="Timer" parent="Player"]
-wait_time = 0.8
-one_shot = true
-
-[node name="DashCDTimer" type="Timer" parent="Player"]
-wait_time = 3.0
-one_shot = true
 
 [node name="Tower" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 486.121, 0)
@@ -186,12 +161,138 @@ script = ExtResource("7_c5vnf")
 [node name="Floor" parent="Obstacles" instance=ExtResource("7_p1wgo")]
 transform = Transform3D(0.4, 0, 0, 0, 1, 0, 0, 0, 0.4, 0, 56.2065, 0)
 
-[node name="HUD" parent="." instance=ExtResource("9_ba6bd")]
+[node name="HUD" type="Control" parent="."]
 unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_top = 5.0
 offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+script = ExtResource("8_ey1hy")
+
+[node name="DashChargeText" type="RichTextLabel" parent="HUD"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -228.0
+offset_top = -103.0
+offset_right = -35.0
+offset_bottom = -63.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("9_twi0n")
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+text = "Dash Charges"
+
+[node name="TimerText" type="RichTextLabel" parent="HUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -237.0
+offset_top = 45.0
+offset_right = -48.0
+offset_bottom = 85.0
+grow_horizontal = 0
+theme = ExtResource("9_twi0n")
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+bbcode_enabled = true
+text = "0\"000"
+
+[node name="ColorRect" type="ColorRect" parent="HUD"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -201.0
+offset_top = -57.0
+offset_right = -161.0
+offset_bottom = -17.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="ColorRect2" type="ColorRect" parent="HUD"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -126.0
+offset_top = -57.0
+offset_right = -86.0
+offset_bottom = -17.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="BestScore" type="RichTextLabel" parent="HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = -56.0
+offset_right = 296.0
+offset_bottom = -16.0
+grow_vertical = 0
+theme = ExtResource("9_twi0n")
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+bbcode_enabled = true
+text = "Best : "
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.999998, 0.00174533, 0, -0.00174533, 0.999998, 0, 1, 2.548)
+script = ExtResource("4_5ll3m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_ou4f8")
+
+[node name="CameraAnchor" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.47, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Player/CameraAnchor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.940112, 0)
+environment = SubResource("Environment_4woh6")
+fov = 80.0
+far = 800.0
+
+[node name="PostProcessingShader" type="MeshInstance3D" parent="Player/CameraAnchor/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_dyvf2")
+script = ExtResource("6_g8ahb")
+
+[node name="AudioListener3D" type="AudioListener3D" parent="Player/CameraAnchor/Camera3D"]
+current = true
+
+[node name="DashTimer" type="Timer" parent="Player"]
+wait_time = 0.8
+one_shot = true
+
+[node name="DashSound" type="AudioStreamPlayer" parent="Player"]
+
+[node name="BGM" type="AudioStreamPlayer3D" parent="Player"]
+stream = ExtResource("13_kpb0p")
+autoplay = true
+
+[node name="Finish" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 974.835, 0)
+script = ExtResource("14_dxo14")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Finish"]
+shape = SubResource("CylinderShape3D_ipcqn")
 
 [connection signal="timeout" from="Player/DashTimer" to="Player" method="_on_dash_timer_timeout"]
-[connection signal="timeout" from="Player/DashCDTimer" to="Player" method="_on_dash_cd_timer_timeout"]
+[connection signal="body_entered" from="Finish" to="Finish" method="_on_body_entered"]
+[connection signal="finish" from="Finish" to="HUD" method="_on_finish_finish"]

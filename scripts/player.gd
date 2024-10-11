@@ -17,14 +17,14 @@ var dash_charges : int = 2
 @onready var camera_anchor: Node3D = $CameraAnchor
 @onready var camera_3d: Camera3D = $CameraAnchor/Camera3D
 @onready var dash_timer: Timer = $DashTimer
-@onready var dash_cd_timer: Timer = $DashCDTimer
 @onready var hud: Control = %HUD
+@onready var bgm: AudioStreamPlayer3D = $BGM
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * 3 * delta
-	elif dash_charges < 2 and dash_cd_timer.is_stopped() :
+	elif dash_charges < 2 :
 		dash_charges = 2
 		hud.update_dash_charge(dash_charges)
 
@@ -57,6 +57,8 @@ func _physics_process(delta: float) -> void:
 		hud.update_dash_charge(dash_charges)
 	move_and_slide()
 	
+	bgm.volume_db = move_toward(bgm.volume_db, (velocity.length() - MAX_SPEED), 0.5) 
+	
 	if mouse_pos_delta.length() < 50 :
 		rotate_y(mouse_pos_delta.x * mouse_sensitivity)
 		camera_3d.rotate_x(mouse_pos_delta.y * mouse_sensitivity)
@@ -70,10 +72,10 @@ func _input(event: InputEvent) -> void:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		mouse_pos_delta = -event.relative
 
-
-func _on_dash_timer_timeout() -> void:
-	is_dashing = false
-
 func add_dash_charge() -> void:
 	dash_charges += 1
 	hud.update_dash_charge(dash_charges)
+
+
+func _on_dash_timer_timeout() -> void:
+	is_dashing = false
